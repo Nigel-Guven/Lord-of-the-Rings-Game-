@@ -1,0 +1,58 @@
+/* styles.css */
+
+@font-face {
+    font-family: 'Ringbearer';
+    src: url('/fonts/RingbearerMedium-51mgZ.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    font-family: 'Ringbearer', sans-serif;
+    background-image: url('/images/mount_doom.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    margin: 0;
+    letter-spacing: 2px;
+    color: #ddcdcd;
+}
+
+h1 {
+    font-family: 'Ringbearer', sans-serif;
+    letter-spacing: 4px;
+    color: #e9e3e3;
+    text-align: center;
+}
+
+.game-container {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    margin: 0 auto;
+}
+
+button {
+    font-family: 'Ringbearer', sans-serif;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #034103;
+    letter-spacing: 2px;
+    color: rgb(179, 255, 1);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #000000;
+}
+
+#choices-container button {
+    width: 48%;
+    margin: 5px 1%;
+    display: inline-block;
+}

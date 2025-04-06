@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lord of the Rings Adventure Game</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Lord of the Rings Adventure Game</h1>
+        <div id="game-output">Welcome to your adventure!</div>
+        <button onclick="startGame()">Start Game</button>
+        <div id="choices-container"></div>
+    </div>
+
+    <script>
+        let eventHistory = [];
+
+        // Frontend logic to start the game and interact with the backend
+        async function startGame() {
+            const response = await fetch('/start-game');
+            const gameData = await response.json();
+            document.getElementById('game-output').innerText = gameData.message;
+
+            showChoices([
+                { text: "Go Through Mines of Moria", action: "Go Through the Mines of Moria" },
+                { text: "Go Through Gap of Isengard", action: "Go Through Gap of Isengard" }
+            ]);
+        }
+
+        async function sendAction(action) {
+            const response = await fetch('/game-action', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ action }),
+            });
+            const gameData = await response.json();
+
+            document.getElementById('game-output').innerText = gameData.message;
+
+            // Show new choices if available
+            if (gameData.choices && gameData.choices.length > 0) {
+                showChoices(gameData.choices);
+            } else {
+                showChoices([{ text: "Game Over. Reload to start again", action: "Start Over" }]);
+            }
+        }
+
+        function showChoices(choices) {
+            const choicesContainer = document.getElementById('choices-container');
+            choicesContainer.innerHTML = '';  // Clear previous choices
+
+            choices.forEach(choice => {
+                const button = document.createElement('button');
+                button.textContent = choice.text;
+                button.onclick = () => sendAction(choice.action);
+                choicesContainer.appendChild(button);
+            });
+        }
+    </script>
+</body>
+</html>
