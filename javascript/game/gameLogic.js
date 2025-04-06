@@ -1,11 +1,12 @@
 const gameState = require('./gameState');
-const gameEvents = require('./gameEvents');  // Import events from events.js
+const gameEvents = require('./events/gameEvents'); // Import events from gameEvents.js
 
-function handleEvent(action) {
+// Function to handle player actions and events
+function handleEvent(action, gameState) {
     let eventMessage = '';
     let nextChoices = [];
 
-    // Check if the action exists in the events object
+    // Handle the action if it exists
     if (gameEvents[action]) {
         const event = gameEvents[action];
         eventMessage = event.eventMessage;
@@ -15,12 +16,12 @@ function handleEvent(action) {
         nextChoices = [];
     }
 
-    // If the action was to quit the game, call quitGame
-    if (action === 'Quit Game') {
-        quitGame(); // Set game state to game over
+    // Check if the action is to quit the game
+    if (action === 'QuitGame') {
+        quitGame(gameState); // End the game and set game state to game over
     }
 
-    // Add the event to the history
+    // Add the event to the event history
     gameState.eventHistory.push({ action, message: eventMessage });
 
     // Check if player health is <= 0
@@ -36,9 +37,11 @@ function handleEvent(action) {
     };
 }
 
-function quitGame() {
-    gameState.gameOver = true;  // End the game
+// Function to handle quitting the game
+function quitGame(gameState) {
+    gameState.gameOver = true;  // Set game state to game over
     console.log('You quit the game. Goodbye!');
 }
 
+// You could also export the game logic to be used in the rest of your game system
 module.exports = { handleEvent };
